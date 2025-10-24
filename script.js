@@ -85,10 +85,10 @@ const galaxyParameters = {
 };
 
 const defaultHeartImages = [
-  'images/1eb495c0-e455-4d08-8be9-6a7b148dd640.jpg',
-  'images/6adc504a-ce4f-4e17-8474-8763a077a4d1.jpg',
-  'images/73ce0154-d8d7-4d4e-b083-837ef0dee69b.jpg',
-  'images/f9632b55-6585-41cd-b540-991d83550d9f.jpg'
+  'images/img1.jpg',
+  'images/img2.jpg',
+  'images/img3.jpg',
+  'images/img4.jpg'
 ];
 
 const heartImages = [
