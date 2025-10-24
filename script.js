@@ -84,7 +84,12 @@ const galaxyParameters = {
   outsideColor: new THREE.Color(0x48b8b8),
 };
 
-const defaultHeartImages = Array.from({ length: 4 }, (_, i) => `images/img${i + 1}.jpg`);
+const defaultHeartImages = [
+  'images/1eb495c0-e455-4d08-8be9-6a7b148dd640.jpg',
+  'images/6adc504a-ce4f-4e17-8474-8763a077a4d1.jpg',
+  'images/73ce0154-d8d7-4d4e-b083-837ef0dee69b.jpg',
+  'images/f9632b55-6585-41cd-b540-991d83550d9f.jpg'
+];
 
 const heartImages = [
   ...(window.dataCCD?.data?.heartImages || []),
@@ -611,17 +616,15 @@ scene.add(planet);
 
 // ---- TẠO CÁC VÒNG CHỮ QUAY QUANH HÀNH TINH ----
 const ringTexts = [
-  'Happy birthday',
-  "Nãi tổng từ",
+  'Happy birthday Nãi tổng từ',
   "Hà Bạch Dương",
-  "24/19/2004",
   ...(window.dataCCD && window.dataCCD.data.ringTexts ? window.dataCCD.data.ringTexts : [])
 ];
 
 function createTextRings() {
   const numRings = ringTexts.length;
   const baseRingRadius = planetRadius * 1.1;
-  const ringSpacing = 5;
+  const ringSpacing = 10; // Tăng khoảng cách giữa các vòng
   window.textRings = [];
 
   for (let i = 0; i < numRings; i++) {
@@ -650,25 +653,25 @@ function createTextRings() {
     const totalChars = text.length;
     const cjkRatio = charCounts.cjk / totalChars;
 
-    let scaleParams = { fontScale: 0.75, spacingScale: 1.1 };
+    let scaleParams = { fontScale: 1.2, spacingScale: 1.1 };
 
     if (i === 0) {
-      scaleParams.fontScale = 0.55;
+      scaleParams.fontScale = 1.3;
       scaleParams.spacingScale = 0.9;
     } else if (i === 1) {
-      scaleParams.fontScale = 0.65;
+      scaleParams.fontScale = 1.2;
       scaleParams.spacingScale = 1.0;
     }
 
     if (cjkRatio > 0) {
-      scaleParams.fontScale *= 0.9;
+      scaleParams.fontScale *= 1.0; // Giữ nguyên kích thước cho chữ tiếng Việt
       scaleParams.spacingScale *= 1.1;
     }
     // ---- Kết thúc logic phân tích font ----
 
     // ---- Tạo texture chữ động ----
-    const textureHeight = 150;
-    const fontSize = Math.max(130, 0.8 * textureHeight);
+    const textureHeight = 280; // Tăng từ 150 lên 280
+    const fontSize = Math.max(240, 0.9 * textureHeight); // Tăng từ 130 lên 240
 
     // Đo chiều rộng của text để lặp lại
     const tempCanvas = document.createElement('canvas');
@@ -707,14 +710,14 @@ function createTextRings() {
 
     // Hiệu ứng glow cho viền chữ
     ctx.shadowColor = '#e0b3ff';
-    ctx.shadowBlur = 18;
-    ctx.lineWidth = 7;
+    ctx.shadowBlur = 30; // Tăng từ 18 lên 30
+    ctx.lineWidth = 12; // Tăng từ 7 lên 12 để chữ dày hơn
     ctx.strokeStyle = '#fff';
     ctx.strokeText(fullText, 0, textureHeight * 0.82); // căn dòng thấp hơn
 
     // Hiệu ứng glow cho phần fill
     ctx.shadowColor = '#ffb3de';
-    ctx.shadowBlur = 24;
+    ctx.shadowBlur = 35; // Tăng từ 24 lên 35
     ctx.fillStyle = '#fff';
     ctx.fillText(fullText, 0, textureHeight * 0.84);
 
@@ -819,7 +822,7 @@ let galaxyAudio = null;
 
 function preloadGalaxyAudio() {
   const audioSources = [
-   "AE THEM NHAC TUY NHA"
+   "music/birthday.mp3"
   ];
 
   const randomIndex = Math.floor(Math.random() * audioSources.length);
@@ -827,7 +830,7 @@ function preloadGalaxyAudio() {
 
   galaxyAudio = new Audio(selectedSrc);
   galaxyAudio.loop = true;
-  galaxyAudio.volume = 1.0;
+  galaxyAudio.volume = 0.7; // Giảm âm lượng xuống 70% để dễ nghe hơn
 
   // Preload không autoplay
   galaxyAudio.preload = "auto";
