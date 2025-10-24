@@ -80,8 +80,8 @@ const galaxyParameters = {
   spin: 0.5,
   randomness: 0.2,
   randomnessPower: 20,
-  insideColor: new THREE.Color(0xd63ed6),
-  outsideColor: new THREE.Color(0x48b8b8),
+  insideColor: new THREE.Color(0x64b5f6), // Xanh dương nhạt dễ nhìn
+  outsideColor: new THREE.Color(0x9c27b0), // Tím dễ nhìn
 };
 
 const defaultHeartImages = [
@@ -150,8 +150,8 @@ for (let i = 0; i < galaxyParameters.count; i++) {
   positions[i3 + 1] = randomY;
   positions[i3 + 2] = Math.sin(totalAngle) * radius + randomZ;
 
-  const mixedColor = new THREE.Color(0xff66ff);
-  mixedColor.lerp(new THREE.Color(0x66ffff), radius / galaxyParameters.radius);
+  const mixedColor = new THREE.Color(0x90caf9); // Xanh dương nhạt
+  mixedColor.lerp(new THREE.Color(0xba68c8), radius / galaxyParameters.radius); // Tím nhạt
   mixedColor.multiplyScalar(0.7 + 0.3 * Math.random());
   colors[i3] = mixedColor.r;
   colors[i3 + 1] = mixedColor.g;
@@ -444,7 +444,7 @@ function createShootingStar() {
   const atmosphereGeometry = new THREE.SphereGeometry(planetRadius * 1.05, 48, 48);
   const atmosphereMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      glowColor: { value: new THREE.Color(0xe0b3ff) }
+      glowColor: { value: new THREE.Color(0x90caf9) } // Xanh dương nhạt dễ nhìn
     },
     vertexShader: `
         varying vec3 vNormal;
@@ -478,7 +478,7 @@ function createShootingStar() {
   }
   const trailGeometry = new THREE.BufferGeometry().setFromPoints(trailPoints);
   const trailMaterial = new THREE.LineBasicMaterial({
-    color: 0x99eaff,
+    color: 0xe1bee7, // Tím pastel nhẹ nhàng
     transparent: true,
     opacity: 0.7,
     linewidth: 2
@@ -523,21 +523,21 @@ function createPlanetTexture(size = 512) {
   canvas.width = canvas.height = size;
   const ctx = canvas.getContext('2d');
 
-  // Nền gradient
+  // Nền gradient - Tông màu xanh dương và tím pastel dễ nhìn
   const gradient = ctx.createRadialGradient(size / 2, size / 2, size / 8, size / 2, size / 2, size / 2);
-  gradient.addColorStop(0.00, '#f8bbd0');
-  gradient.addColorStop(0.12, '#f48fb1');
-  gradient.addColorStop(0.22, '#f06292');
-  gradient.addColorStop(0.35, '#ffffff');
-  gradient.addColorStop(0.50, '#e1aaff');
-  gradient.addColorStop(0.62, '#a259f7');
-  gradient.addColorStop(0.75, '#b2ff59');
-  gradient.addColorStop(1.00, '#3fd8c7');
+  gradient.addColorStop(0.00, '#e3f2fd'); // Xanh dương rất nhạt
+  gradient.addColorStop(0.15, '#90caf9'); // Xanh dương nhạt
+  gradient.addColorStop(0.30, '#64b5f6'); // Xanh dương
+  gradient.addColorStop(0.45, '#42a5f5'); // Xanh dương vừa
+  gradient.addColorStop(0.60, '#ba68c8'); // Tím nhạt
+  gradient.addColorStop(0.75, '#9c27b0'); // Tím
+  gradient.addColorStop(0.90, '#7b1fa2'); // Tím đậm
+  gradient.addColorStop(1.00, '#4a148c'); // Tím sẫm
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, size, size);
 
-  // Các đốm màu ngẫu nhiên
-  const spotColors = ['#f8bbd0', '#f8bbd0', '#f48fb1', '#f48fb1', '#f06292', '#f06292', '#ffffff', '#e1aaff', '#a259f7', '#b2ff59'];
+  // Các đốm màu ngẫu nhiên - Tông xanh dương tím pastel
+  const spotColors = ['#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#ce93d8', '#ba68c8', '#ab47bc', '#9c27b0', '#e1bee7', '#f3e5f5'];
   for (let i = 0; i < 40; i++) {
     const x = Math.random() * size;
     const y = Math.random() * size;
@@ -673,8 +673,8 @@ function createTextRings() {
     // ---- Kết thúc logic phân tích font ----
 
     // ---- Tạo texture chữ động ----
-    const textureHeight = 280; // Tăng từ 150 lên 280
-    const fontSize = Math.max(240, 0.9 * textureHeight); // Tăng từ 130 lên 240
+    const textureHeight = 400; // Tăng từ 280 lên 400 để chữ lớn hơn
+    const fontSize = Math.max(350, 0.9 * textureHeight); // Tăng từ 240 lên 350 để chữ to hơn
 
     // Đo chiều rộng của text để lặp lại
     const tempCanvas = document.createElement('canvas');
@@ -712,15 +712,15 @@ function createTextRings() {
     ctx.textBaseline = 'alphabetic';
 
     // Hiệu ứng glow cho viền chữ
-    ctx.shadowColor = '#e0b3ff';
-    ctx.shadowBlur = 30; // Tăng từ 18 lên 30
-    ctx.lineWidth = 12; // Tăng từ 7 lên 12 để chữ dày hơn
+    ctx.shadowColor = '#90caf9'; // Xanh dương nhạt
+    ctx.shadowBlur = 40; // Tăng hiệu ứng glow
+    ctx.lineWidth = 16; // Tăng độ dày viền chữ
     ctx.strokeStyle = '#fff';
     ctx.strokeText(fullText, 0, textureHeight * 0.82); // căn dòng thấp hơn
 
     // Hiệu ứng glow cho phần fill
-    ctx.shadowColor = '#ffb3de';
-    ctx.shadowBlur = 35; // Tăng từ 24 lên 35
+    ctx.shadowColor = '#ce93d8'; // Tím pastel
+    ctx.shadowBlur = 45; // Tăng hiệu ứng glow
     ctx.fillStyle = '#fff';
     ctx.fillText(fullText, 0, textureHeight * 0.84);
 
@@ -729,7 +729,7 @@ function createTextRings() {
     ringTexture.repeat.x = finalTextureWidth / textureWidthCircumference;
     ringTexture.needsUpdate = true;
 
-    const ringGeometry = new THREE.CylinderGeometry(ringRadius, ringRadius, 1, 128, 1, true);
+    const ringGeometry = new THREE.CylinderGeometry(ringRadius, ringRadius, 3, 128, 1, true); // Tăng height từ 1 lên 3 để chữ cao hơn
 
     const ringMaterial = new THREE.MeshBasicMaterial({
       map: ringTexture,
@@ -749,7 +749,7 @@ function createTextRings() {
     ringGroup.userData = {
       ringRadius: ringRadius,
       angleOffset: 0.15 * Math.PI * 0.5,
-      speed: 0.002 + 0.00025, // Tốc độ quay
+      speed: 0.0008, // Giảm tốc độ quay từ 0.00225 xuống 0.0008 để chậm hơn và dễ đọc
       tiltSpeed: 0, rollSpeed: 0, pitchSpeed: 0, // Tốc độ lắc
       tiltAmplitude: Math.PI / 3, rollAmplitude: Math.PI / 6, pitchAmplitude: Math.PI / 8, // Biên độ lắc
       tiltPhase: Math.PI * 2, rollPhase: Math.PI * 2, pitchPhase: Math.PI * 2, // Pha lắc
@@ -1124,15 +1124,15 @@ function createHintText() {
   context.font = `bold ${fontSize}px Arial, sans-serif`;
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.shadowColor = '#ffb3de';
+  context.shadowColor = '#90caf9'; // Xanh dương nhạt
   context.shadowBlur = 5;
   context.lineWidth = 2;
-  context.strokeStyle = 'rgba(255, 200, 220, 0.8)';
+  context.strokeStyle = 'rgba(144, 202, 249, 0.8)'; // Xanh dương pastel
   context.strokeText(text, canvasSize / 2, canvasSize / 2);
-  context.shadowColor = '#e0b3ff';
+  context.shadowColor = '#ce93d8'; // Tím pastel
   context.shadowBlur = 5;
   context.lineWidth = 2;
-  context.strokeStyle = 'rgba(220, 180, 255, 0.5)';
+  context.strokeStyle = 'rgba(206, 147, 216, 0.5)'; // Tím pastel
   context.strokeText(text, canvasSize / 2, canvasSize / 2);
   context.shadowColor = 'transparent';
   context.shadowBlur = 0;
